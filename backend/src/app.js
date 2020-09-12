@@ -1,9 +1,14 @@
 import express from 'express';
+import cors from 'cors';
 
 const PORT = 3001;
 const app = express();
 
-app.get('/test', (request, response) => {
+const corsOption = {
+  origin: 'http://localhost:3000',
+};
+
+app.get('/test', cors(corsOption), (request, response) => {
   response.send('Hello from express!');
 });
 
