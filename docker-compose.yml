@@ -1,0 +1,44 @@
+version: '3.7'
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+    command: yarn start
+    volumes:
+      - ./frontend/src:/usr/app/src
+    tty: true
+    stdin_open: true
+    environment:
+      - REACT_APP_PORT=8080
+
+  api:
+    build:
+      context: ./backend
+    command: yarn run dev
+    volumes:
+      - ./backend/src:/usr/app/src
+    environment:
+      - PORT=3001
+      - MONGO_PORT=27017
+      - MONGO_URL=api_mongo
+    depends_on:
+      - api_mongo
+
+  api_mongo:
+    image: mongo:latest
+    volumes:
+      - mongodb_api:/data/db
+
+  nignx:
+    image: nginx:stable-alpine
+    ports:
+      - '8080:80'
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - frontend
+      - api
+
+volumes:
+  mongodb_api:

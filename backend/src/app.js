@@ -1,16 +1,24 @@
 import express from 'express';
-import cors from 'cors';
 
-const PORT = 3001;
+import mongoose from 'mongoose';
+import initRouter from './routers/index.js';
+
+const MONGO_PORT = process.env.MONGO_PORT || 27017;
+const MONGO_URL = process.env.MONGO_URL;
+const MONGODB = `mongodb://${MONGO_URL}:${MONGO_PORT}/test`;
+
+mongoose.connect(MONGODB, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+});
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDb connection error:'));
+
+const PORT = process.env.PORT || 3002;
 const app = express();
 
-const corsOption = {
-  origin: 'http://localhost:3000',
-};
-
-app.get('/test', cors(corsOption), (request, response) => {
-  response.send('Hello from express!');
-});
+initRouter(app);
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
