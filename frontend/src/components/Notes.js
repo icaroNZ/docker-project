@@ -8,12 +8,21 @@ function Notes() {
   useEffect(() => {
     async function fetchNotes() {
       const { data } = await axios.get('http://localhost:8080/api/notes');
-      console.log('data', data);
       setNotes(data.data);
     }
     fetchNotes();
     return () => {};
   }, []);
+
+  async function handleDelete(id) {
+    console.log(`Deleting note with id ${id}`);
+    const { data } = await axios.delete(
+      `http://localhost:8080/api/notes/${id}`
+    );
+    const newNotes = notes.filter((note) => note.id !== id);
+    setNotes(newNotes);
+    console.log(data);
+  }
 
   return (
     <section>
@@ -21,7 +30,9 @@ function Notes() {
         <div className='row'>
           {notes &&
             notes.map((note) => {
-              return <Note title={note.title} description={note.description} />;
+              return (
+                <Note note={note} handleDelete={handleDelete} key={note._id} />
+              );
             })}
         </div>
       </div>

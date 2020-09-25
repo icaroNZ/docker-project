@@ -7,13 +7,13 @@ function Navbar() {
         <div className='brand-logo'>Notes</div>
         <ul className='right hide-on-small-only'>
           <li>
-            <a href='#'>Home</a>
+            <a href='#!'>Home</a>
           </li>
           <li>
-            <a href='#'>Notes</a>
+            <a href='#!'>Notes</a>
           </li>
           <li>
-            <a href='#'>Create</a>
+            <a href='#!'>Create</a>
           </li>
         </ul>
       </div>
