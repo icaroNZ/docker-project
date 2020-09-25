@@ -1,15 +1,13 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import './App.scss';
 import Navbar from './components/Navbar';
 import Notes from './components/Notes';
 import M from 'materialize-css';
+import ModalNotes from './components/ModalNotes';
 
 function App() {
-  const _noteModal = useRef(null);
-
   useEffect(() => {
     M.AutoInit();
-    M.Modal.init(_noteModal.current);
     return () => {};
   }, []);
 
@@ -25,25 +23,7 @@ function App() {
           <i className='material-icons'>add</i>
         </a>
       </div>
-      <div id='modal-add-note' className='modal' ref={_noteModal}>
-        <div className='modal-content'>
-          <h4>Create a new note</h4>
-        </div>
-        <div className='modal-footer'>
-          <a
-            href='#!'
-            className='modal-action modal-close waves-effect btn-flat red white-text'
-          >
-            Cancel
-          </a>{' '}
-          <a
-            href='#!'
-            className='modal-action modal-close waves-effect btn-flat green white-text'
-          >
-            Ok
-          </a>
-        </div>
-      </div>
+      <ModalNotes />
     </div>
   );
 }
