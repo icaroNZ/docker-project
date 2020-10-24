@@ -1,12 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useContext } from 'react';
 import M from 'materialize-css';
+import StateContext from '../StateContext';
 
 function NotesForm() {
   const _titleInput = useRef(null);
   const _descriptionInput = useRef(null);
 
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+  const { title, setTitle, description, setDescription } = useContext(
+    StateContext
+  );
 
   useEffect(() => {
     M.CharacterCounter.init(_titleInput.current);
